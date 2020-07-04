@@ -7,6 +7,7 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquerysession.js"></script>
         <link rel="stylesheet" type="text/css" href="css/home.css">
         <script src="js/font.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -46,12 +47,12 @@
 			        <form id="login-form">
 			          <div class="form-group">
 			                <img src="images/user.png" class="input_img" />
-			                <input type="text" name="email" class="form-fields" pattern="[A-z0-9._]+@{1}[A-z]+[.]{1}[a-z]{2,3}" title="Invalid Email" placeholder="Email" />
+			                <input type="text" name="email" id="email" class="form-fields" pattern="[A-z0-9._]+@{1}[A-z]+[.]{1}[a-z]{2,3}" title="Invalid Email" placeholder="Email" />
 			            </div>
 			            <br/>
 			            <div class="form-group">
 			                <img src="images/password.png" class="input_img" />
-			                <input type="password" name="password" class="form-fields" pattern=".{8,}" title="Password should contain 8 characters" placeholder="Password" />
+			                <input type="password" name="password" id="password" class="form-fields" pattern=".{8,}" title="Password should contain 8 characters" placeholder="Password" />
 			            </div><br/>
 			            <div class="custom-control custom-checkbox text-center">
 						    <input type="checkbox" class="custom-control-input" id="remember" name="remember">
@@ -111,13 +112,28 @@
         <br/>
         <div class="bg-dark text-center text-white sticky-bottom"><i>Designed By <b style="font-family: cursive;">Sri Hari Harran</b></i></div>
         <script>
-		    $('#login-form').submit(function(e)
+            var email=localStorage.getItem("email");
+            var password=localStorage.getItem("password");
+            $('#email').val(email);
+            $('#password').val(password);
+            if(email && password){
+                $('#remember').prop('checked', true);
+            }
+		    $('#login-form').submit(function()
 		    {
 		        if($('#remember').is(':checked'))
 		        {
-		        	e.preventDefault();
+                    var email=$('#email').val();
+                    var password=$('#password').val();
+		        	localStorage.setItem("email",email);
+                    localStorage.setItem("password",password);
 		        	$('#myModal').modal('toggle');
 		        }
+                else
+                {
+                    localStorage.setItem("email","");
+                    localStorage.setItem("password","");
+                }
 
 		    });
 		</script>
